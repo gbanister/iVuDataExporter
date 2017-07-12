@@ -58,6 +58,7 @@ Public Class MainForm
         saveToolTip.IsBalloon = True
         saveToolTip.ShowAlways = True
         saveToolTip.SetToolTip(btnSave, "Click to save label data to a file.")
+        saveMessage.Text = ""
     End Sub
 
     Private Sub OnFormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
@@ -232,11 +233,9 @@ Public Class MainForm
             End If
             If (NewIndex > 0) Then
                 Length = (NewIndex - LastIndex)
-
                 data = Response.Substring(LastIndex, Length)
                 DataExportTextBox.AppendText(data + Suffix + Environment.NewLine)
-                _dataList.Add(data)
-                '                ToFile(data)
+                CacheData(data)
                 LastIndex = (NewIndex + Delimiter.Length)
             End If
         Loop While (NewIndex > 0)
@@ -247,7 +246,7 @@ Public Class MainForm
             Length = (Response.Length - LastIndex)
             data = Response.Substring(LastIndex, Length)
             DataExportTextBox.AppendText(data)
-            '            ToFile(data)
+            CacheData(data)
         End If
 
         ' Remove Old Data From The Listing If We Have Exceeded The Specified Buffer Size, 
@@ -266,25 +265,16 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ToBuffer(text As String)
-        '        text = Replace(text, vbCrLf, "")
-        Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-        Using outputFile As New StreamWriter(mydocpath & Convert.ToString("\WriteLines.txt"), True)
-            outputFile.WriteLine(text)
-        End Using
-    End Sub
+    Private Sub CacheData(data As String)
 
+        Dim dataWithoutNewLine = data.Replace(Environment.NewLine, "")
+        Dim splitData = Enumerable.Range(0, dataWithoutNewLine.Length \ 35).[Select](Function(i) dataWithoutNewLine.Substring(i * 35, 35))
 
-    Private Sub ToFile(text As String)
-        '        text = Replace(text, vbCrLf, "")
-        Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-        Using outputFile As New StreamWriter(mydocpath & Convert.ToString("\WriteLines.txt"), True)
-            outputFile.WriteLine(text)
-        End Using
+        _dataList.AddRange(splitData)
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\Output" & "_" & DateTime.Now.ToString("yyyyMMdd_HH_mm_ss") & ".txt"
+        Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\Output" & "_" & DateTime.Now.ToString("yyyyMMdd_HH_mm_ss") & ".txt"
 
         File.WriteAllLines(mydocpath, _dataList, Encoding.UTF8)
 
@@ -294,5 +284,14 @@ Public Class MainForm
 
         saveMessage.Text = $"The data has been saved to {mydocpath}"
     End Sub
+
+    '
+    '    Private Sub ToFile(text As String)
+    '        '        text = Replace(text, vbCrLf, "")
+    '        Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+    '        Using outputFile As New StreamWriter(mydocpath & Convert.ToString("\WriteLines.txt"), True)
+    '            outputFile.WriteLine(text)
+    '        End Using
+    '    End Sub
 
 End Class

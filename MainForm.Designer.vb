@@ -44,7 +44,7 @@ Partial Class MainForm
         '
         Me.StatusLabel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.StatusLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.StatusLabel.Location = New System.Drawing.Point(14, 257)
+        Me.StatusLabel.Location = New System.Drawing.Point(14, 272)
         Me.StatusLabel.Name = "StatusLabel"
         Me.StatusLabel.Size = New System.Drawing.Size(82, 18)
         Me.StatusLabel.TabIndex = 82
@@ -55,7 +55,7 @@ Partial Class MainForm
         '
         Me.BytesReceivedTextBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BytesReceivedTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.BytesReceivedTextBox.Location = New System.Drawing.Point(301, 258)
+        Me.BytesReceivedTextBox.Location = New System.Drawing.Point(305, 273)
         Me.BytesReceivedTextBox.Name = "BytesReceivedTextBox"
         Me.BytesReceivedTextBox.Size = New System.Drawing.Size(74, 17)
         Me.BytesReceivedTextBox.TabIndex = 81
@@ -65,7 +65,7 @@ Partial Class MainForm
         '
         Me.label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.label3.AutoSize = True
-        Me.label3.Location = New System.Drawing.Point(213, 259)
+        Me.label3.Location = New System.Drawing.Point(217, 274)
         Me.label3.Name = "label3"
         Me.label3.Size = New System.Drawing.Size(85, 13)
         Me.label3.TabIndex = 80
@@ -76,7 +76,7 @@ Partial Class MainForm
         '
         Me.label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.label2.AutoSize = True
-        Me.label2.Location = New System.Drawing.Point(340, 18)
+        Me.label2.Location = New System.Drawing.Point(344, 18)
         Me.label2.Name = "label2"
         Me.label2.Size = New System.Drawing.Size(40, 13)
         Me.label2.TabIndex = 79
@@ -94,13 +94,13 @@ Partial Class MainForm
         Me.DataExportTextBox.Name = "DataExportTextBox"
         Me.DataExportTextBox.ReadOnly = True
         Me.DataExportTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.DataExportTextBox.Size = New System.Drawing.Size(376, 161)
+        Me.DataExportTextBox.Size = New System.Drawing.Size(380, 167)
         Me.DataExportTextBox.TabIndex = 78
         '
         'MaxKBytesUpDownBox
         '
         Me.MaxKBytesUpDownBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.MaxKBytesUpDownBox.Location = New System.Drawing.Point(263, 15)
+        Me.MaxKBytesUpDownBox.Location = New System.Drawing.Point(267, 15)
         Me.MaxKBytesUpDownBox.Maximum = New Decimal(New Integer() {1000000, 0, 0, 0})
         Me.MaxKBytesUpDownBox.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.MaxKBytesUpDownBox.Name = "MaxKBytesUpDownBox"
@@ -112,7 +112,7 @@ Partial Class MainForm
         '
         Me.label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.label1.AutoSize = True
-        Me.label1.Location = New System.Drawing.Point(199, 18)
+        Me.label1.Location = New System.Drawing.Point(203, 18)
         Me.label1.Name = "label1"
         Me.label1.Size = New System.Drawing.Size(61, 13)
         Me.label1.TabIndex = 76
@@ -123,7 +123,7 @@ Partial Class MainForm
         '
         Me.ClearListLink.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.ClearListLink.AutoSize = True
-        Me.ClearListLink.Location = New System.Drawing.Point(101, 260)
+        Me.ClearListLink.Location = New System.Drawing.Point(101, 275)
         Me.ClearListLink.Name = "ClearListLink"
         Me.ClearListLink.Size = New System.Drawing.Size(50, 13)
         Me.ClearListLink.TabIndex = 75
@@ -154,20 +154,19 @@ Partial Class MainForm
         'btnSave
         '
         Me.btnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnSave.Location = New System.Drawing.Point(23, 218)
+        Me.btnSave.Location = New System.Drawing.Point(12, 233)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(75, 23)
         Me.btnSave.TabIndex = 83
-        Me.btnSave.Text = "Save"
+        Me.btnSave.Text = "Export Data"
         Me.btnSave.UseVisualStyleBackColor = True
         '
         'saveMessage
         '
         Me.saveMessage.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.saveMessage.AutoSize = True
-        Me.saveMessage.Location = New System.Drawing.Point(101, 223)
+        Me.saveMessage.Location = New System.Drawing.Point(99, 216)
         Me.saveMessage.Name = "saveMessage"
-        Me.saveMessage.Size = New System.Drawing.Size(39, 13)
+        Me.saveMessage.Size = New System.Drawing.Size(285, 40)
         Me.saveMessage.TabIndex = 84
         Me.saveMessage.Text = "Label4"
         '
@@ -175,7 +174,7 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(398, 279)
+        Me.ClientSize = New System.Drawing.Size(402, 294)
         Me.Controls.Add(Me.saveMessage)
         Me.Controls.Add(Me.btnSave)
         Me.Controls.Add(Me.StatusLabel)
