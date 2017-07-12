@@ -59,6 +59,8 @@ Public Class MainForm
         saveToolTip.ShowAlways = True
         saveToolTip.SetToolTip(btnSave, "Click to save label data to a file.")
         saveMessage.Text = ""
+        ClearListLink.Enabled = False
+        ClearListLink.Visible = False
     End Sub
 
     Private Sub OnFormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
@@ -83,13 +85,16 @@ Public Class MainForm
     End Sub
 
     Private Sub OnClearListLinkClicked(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ClearListLink.Click
-
+        ClearDisplay()
         'The User Wants To Clear The Current Listing Of Exported Data
+    End Sub
+
+    Private Sub ClearDisplay()
+
         DataExportTextBox.Text = ""
         BytesReceivedTextBox.Text = "0"
         TotalBytesReceived = 0
         ClearListLink.Enabled = False
-
     End Sub
 
     Private Sub OnStreamUpdateTimerTick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles StreamUpdateTimer.Tick
@@ -283,6 +288,8 @@ Public Class MainForm
         Process.Start("explorer.exe", mydocpath)
 
         saveMessage.Text = $"The data has been saved to {mydocpath}"
+
+        ClearDisplay()
     End Sub
 
     '
