@@ -19,6 +19,7 @@
 '               asynchronous) should be considered when developing client 
 '               applications for production purposes.
 
+Imports System.IO
 Imports System.Net.Sockets
 Imports System.Text
 
@@ -31,6 +32,7 @@ Public Class MainForm
     Dim TCPClient As TcpClient
     Dim TCPStream As NetworkStream
     Dim TotalBytesReceived As UInt64
+    Dim _dataList As List(Of String) = New List(Of String)()
 
 
     Private Sub OnFormLoad(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -48,6 +50,14 @@ Public Class MainForm
 
         ' Default To All Controls The Disconnected State
         SetDisconnectedState()
+
+        Dim saveToolTip = New ToolTip()
+        'saveToolTip.ToolTipTitle = "Button Tooltip"
+        saveToolTip.UseFading = True
+        saveToolTip.UseAnimation = True
+        saveToolTip.IsBalloon = True
+        saveToolTip.ShowAlways = True
+        saveToolTip.SetToolTip(btnSave, "Click to save label data to a file.")
     End Sub
 
     Private Sub OnFormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
@@ -92,10 +102,10 @@ Public Class MainForm
         End If
 
         ' Since The Stream Is Valid, Check To See If The Connection Has Been Lost
-        If (TCPClient.Client.Poll(1, SelectMode.SelectRead) And _
+        If (TCPClient.Client.Poll(1, SelectMode.SelectRead) And
                  (TCPClient.Client.Available = 0)) Then
             DisconnectFromSensor()
-            MsgBox("The sensor closed the connection." + Environment.NewLine + _
+            MsgBox("The sensor closed the connection." + Environment.NewLine +
                    "Please verify the sensor's configuration and connections to PC.")
             Return
         End If
@@ -196,6 +206,7 @@ Public Class MainForm
         Dim OverrunAmount As Int32 = 0
         Dim Delimiter As String
         Dim Suffix As String
+        Dim data As String
 
         ' This Loop Replaces All Line Terminators With ASCII Representations
         ' And Forces Wraps In The Displayed Listing
@@ -221,15 +232,22 @@ Public Class MainForm
             End If
             If (NewIndex > 0) Then
                 Length = (NewIndex - LastIndex)
-                DataExportTextBox.AppendText(Response.Substring(LastIndex, Length) + Suffix + Environment.NewLine)
+
+                data = Response.Substring(LastIndex, Length)
+                DataExportTextBox.AppendText(data + Suffix + Environment.NewLine)
+                _dataList.Add(data)
+                '                ToFile(data)
                 LastIndex = (NewIndex + Delimiter.Length)
             End If
         Loop While (NewIndex > 0)
 
+
         ' Add The Remaining Bytes On The Next Line
         If (LastIndex < Response.Length) Then
             Length = (Response.Length - LastIndex)
-            DataExportTextBox.AppendText(Response.Substring(LastIndex, Length))
+            data = Response.Substring(LastIndex, Length)
+            DataExportTextBox.AppendText(data)
+            '            ToFile(data)
         End If
 
         ' Remove Old Data From The Listing If We Have Exceeded The Specified Buffer Size, 
@@ -246,6 +264,35 @@ Public Class MainForm
             ClearListLink.Enabled = True
         End If
 
+    End Sub
+
+    Private Sub ToBuffer(text As String)
+        '        text = Replace(text, vbCrLf, "")
+        Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+        Using outputFile As New StreamWriter(mydocpath & Convert.ToString("\WriteLines.txt"), True)
+            outputFile.WriteLine(text)
+        End Using
+    End Sub
+
+
+    Private Sub ToFile(text As String)
+        '        text = Replace(text, vbCrLf, "")
+        Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+        Using outputFile As New StreamWriter(mydocpath & Convert.ToString("\WriteLines.txt"), True)
+            outputFile.WriteLine(text)
+        End Using
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim mydocpath As String = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) & "\Output" & "_" & DateTime.Now.ToString("yyyyMMdd_HH_mm_ss") & ".txt"
+
+        File.WriteAllLines(mydocpath, _dataList, Encoding.UTF8)
+
+        _dataList.Clear()
+
+        Process.Start("explorer.exe", mydocpath)
+
+        saveMessage.Text = $"The data has been saved to {mydocpath}"
     End Sub
 
 End Class
